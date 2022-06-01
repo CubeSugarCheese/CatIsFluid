@@ -31,7 +31,7 @@ dependencies {
 
     common(project(":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(":common", configuration = "transformProductionFabric")) { isTransitive = false }
-    common(kotlin("stdlib-jdk8"))
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.7.4+kotlin.1.6.21")
 }
 
 val javaComponent = components.getByName("java", AdhocComponentWithVariants::class)
@@ -50,11 +50,6 @@ tasks {
 
     shadowJar {
         exclude("architectury.common.json")
-        /**
-         * magic!
-         * groovy -> kotlin dsl
-         * [project.configurations.shadowCommon] -> listOf(project.configurations["shadowCommon"])
-         * */
         configurations = listOf(project.configurations["shadowCommon"])
         archiveClassifier.set("dev-shadow")
     }
